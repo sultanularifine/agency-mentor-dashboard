@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        body {
+            background-color: #f8fafc;
+            /* lightBg */
+            color: #111827;
+            /* slate-900 */
+        }
+
+        .text-white {
+            color: #111827 !important;
+            /* লাইট মোডে text white কে dark কালারে দেখাবে */
+        }
+
+        .opacity-40 {
+            opacity: 0.6;
+            /* light mode adjust */
+        }
+
+        .opacity-50 {
+            opacity: 0.7;
+        }
+
+        .opacity-30 {
+            opacity: 0.6;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-white {
+            background-color: #fff;
+            /* light mode */
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .dark .text-white {
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-12 flex flex-col md:flex-row items-center gap-10">
+    <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-tr from-primary to-orange-500 rounded-[3rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+        <div class="relative w-48 h-48 rounded-[2.8rem] bg-[#0a0a0a] border border-white/10 flex items-center justify-center overflow-hidden">
+            <div class="text-6xl grayscale group-hover:grayscale-0 transition-all duration-500"><img src="/frontend/image.png" alt="👨‍💻"></div>
+            <div class="absolute bottom-0 w-full py-3 bg-primary/90 backdrop-blur-md text-center">
+                <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white italic">Founder & CEO</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 text-center md:text-left">
+        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+            <h2 class="text-4xl font-black text-white uppercase italic tracking-tighter">Sultanul Arifine</h2>
+            <span class="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-black text-primary uppercase italic tracking-widest">Verified Expert</span>
+        </div>
+        <p class="text-sm font-medium text-white/40 mb-8 max-w-xl leading-relaxed">
+            Web Developer & Digital Educator specializing in <span class="text-white italic">Laravel Ecosystem</span> and <span class="text-white italic">Responsible AI Implementation</span>. Leading tech mentorship at Requin BD.
+        </p>
+        
+        <div class="flex flex-wrap justify-center md:justify-start gap-8">
+            <div class="text-center md:text-left">
+                <p class="text-2xl font-black text-white italic leading-none">08+</p>
+                <p class="text-[9px] font-black uppercase opacity-30 text-white mt-2 tracking-widest italic">Years Experience</p>
+            </div>
+            <div class="text-center md:text-left">
+                <p class="text-2xl font-black text-white italic leading-none">1.2k</p>
+                <p class="text-[9px] font-black uppercase opacity-30 text-white mt-2 tracking-widest italic">Students Mentored</p>
+            </div>
+            <div class="text-center md:text-left">
+                <p class="text-2xl font-black text-white italic leading-none">45+</p>
+                <p class="text-[9px] font-black uppercase opacity-30 text-white mt-2 tracking-widest italic">Global Projects</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-1 space-y-8">
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-gradient-to-b from-white/5 to-transparent">
+            <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-8 italic text-white">Core <span class="text-primary">Stack</span></h4>
+            <div class="flex flex-wrap gap-3">
+                <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-white/70 italic hover:border-primary transition-all">Laravel</span>
+                <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-white/70 italic hover:border-primary transition-all">PHP 8.x</span>
+                <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-white/70 italic hover:border-primary transition-all">MySQL</span>
+                <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-white/70 italic hover:border-primary transition-all">Tailwind CSS</span>
+                <span class="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold text-white/70 italic hover:border-primary transition-all">AI Prompt Eng.</span>
+            </div>
+        </div>
+
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/5">
+            <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6 italic text-white">Social <span class="text-primary">Connect</span></h4>
+            <div class="space-y-4">
+                <a href="#" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-primary transition-all">
+                    <span class="text-lg">🔗</span> LinkedIn Profile
+                </a>
+                <a href="#" class="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-primary transition-all">
+                    <span class="text-lg">🐙</span> GitHub Repositories
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-2 space-y-8">
+        <div class="glass p-10 rounded-[3.5rem] border-white/5 bg-white/[0.02]">
+            <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-8 italic text-white">Professional <span class="text-primary">Bio</span></h4>
+            <div class="space-y-6 text-sm font-medium text-white/60 leading-relaxed">
+                <p>
+                    আমি সুলতানুল আরিফিন, একজন ওয়েব ডেভেলপার এবং ডিজিটাল এডুকেটর। বিগত কয়েক বছর ধরে আমি <span class="text-white italic">Laravel</span> এবং <span class="text-white italic">PHP</span> ইকোসিস্টেমে কাজ করছি। আমার মূল লক্ষ্য হলো বাংলাদেশের তরুণদের প্রফেশনাল স্কিল ডেভেলপমেন্টে সহযোগিতা করা।
+                </p>
+                <p>
+                    <span class="text-primary font-bold italic">Requin BD</span>-এর প্রতিষ্ঠাতা হিসেবে আমি এআই-এর সঠিক এবং দায়িত্বশীল ব্যবহার প্রচার করছি, বিশেষ করে মাধ্যমিক পর্যায়ের শিক্ষার্থীদের জন্য। আমার কাজের ক্ষেত্র শুধু কোডিং নয়, বরং একটি ডিজিটাল ইকোসিস্টেম তৈরি করা।
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

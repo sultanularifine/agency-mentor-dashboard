@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        body {
+            background-color: #f8fafc;
+            /* lightBg */
+            color: #111827;
+            /* slate-900 */
+        }
+
+        .text-white {
+            color: #111827 !important;
+            /* লাইট মোডে text white কে dark কালারে দেখাবে */
+        }
+
+        .opacity-40 {
+            opacity: 0.6;
+            /* light mode adjust */
+        }
+
+        .opacity-50 {
+            opacity: 0.7;
+        }
+
+        .opacity-30 {
+            opacity: 0.6;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-white {
+            background-color: #fff;
+            /* light mode */
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .dark .text-white {
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-8 flex justify-between items-end">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Academic <span class="text-primary">Batches</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white">Central control for all active and upcoming educational sessions</p>
+    </div>
+    <div class="flex gap-2">
+        <button class="bg-white/5 border border-white/10 text-white text-[9px] font-black uppercase tracking-widest px-6 py-2.5 rounded-xl hover:bg-primary hover:border-primary transition-all">Create New Batch</button>
+    </div>
+</div>
+
+<div class="glass p-1 rounded-[2.5rem] border-white/5 overflow-hidden">
+    <div class="glass rounded-[2.3rem] overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-white/5">
+                    <th class="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-white">Batch Name</th>
+                    <th class="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-white">Course Module</th>
+                    <th class="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-white text-center">Student Count</th>
+                    <th class="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-white">Schedule</th>
+                    <th class="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-white text-right">Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                
+                <tr class="group hover:bg-white/[0.02] transition-colors">
+                    <td class="px-8 py-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black text-xs italic">B-08</div>
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-tight text-white">Batch #08 Elite</p>
+                                <p class="text-[8px] font-bold opacity-30 text-white uppercase tracking-tighter italic">Advanced Tier</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6">
+                        <span class="text-[11px] font-bold text-white/80">Mastering Laravel & Advanced Backend</span>
+                    </td>
+                    <td class="px-8 py-6 text-center">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5">
+                            <span class="text-xs font-black text-white italic">42</span>
+                            <span class="text-[8px] font-bold opacity-20 uppercase text-white">Active</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-white uppercase tracking-tight">Sat, Mon, Wed</span>
+                            <span class="text-[9px] font-bold text-primary italic uppercase">08:30 PM - 10:00 PM</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6 text-right">
+                        <span class="px-3 py-1 rounded-lg bg-green-500/10 border border-green-500/20 text-[8px] font-black uppercase tracking-widest text-green-500">Live Now</span>
+                    </td>
+                </tr>
+
+                <tr class="group hover:bg-white/[0.02] transition-colors">
+                    <td class="px-8 py-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 font-black text-xs italic">B-09</div>
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-tight text-white">Batch #09 Junior</p>
+                                <p class="text-[8px] font-bold opacity-30 text-white uppercase tracking-tighter italic">School Program (Class 6-10)</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6">
+                        <span class="text-[11px] font-bold text-white/80">Responsible AI & Digital Literacy</span>
+                    </td>
+                    <td class="px-8 py-6 text-center">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5">
+                            <span class="text-xs font-black text-white italic">128</span>
+                            <span class="text-[8px] font-bold opacity-20 uppercase text-white">Enrolled</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-white uppercase tracking-tight">Sun, Tue, Thu</span>
+                            <span class="text-[9px] font-bold text-blue-400 italic uppercase">04:00 PM - 05:30 PM</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6 text-right">
+                        <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[8px] font-black uppercase tracking-widest text-white/40">Upcoming</span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

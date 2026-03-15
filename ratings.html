@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        body {
+            background-color: #f8fafc;
+            /* lightBg */
+            color: #111827;
+            /* slate-900 */
+        }
+
+        .text-white {
+            color: #111827 !important;
+            /* লাইট মোডে text white কে dark কালারে দেখাবে */
+        }
+
+        .opacity-40 {
+            opacity: 0.6;
+            /* light mode adjust */
+        }
+
+        .opacity-50 {
+            opacity: 0.7;
+        }
+
+        .opacity-30 {
+            opacity: 0.6;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-white {
+            background-color: #fff;
+            /* light mode */
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .dark .text-white {
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Performance <span class="text-primary">Ratings</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Aggregated skill metrics and mentor evaluations for Batch #08</p>
+    </div>
+    <div class="flex gap-2">
+        <span class="glass px-4 py-2 rounded-xl border-white/5 text-[9px] font-black uppercase text-white/40 italic">Avg. Batch Rating: <span class="text-primary italic">4.7/5.0</span></span>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <div class="glass p-1 rounded-[3rem] border-white/5 bg-gradient-to-br from-primary/10 to-transparent group">
+        <div class="glass rounded-[2.8rem] p-8">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-tight text-white italic">Technical Proficiency</h4>
+                    <p class="text-[8px] font-bold opacity-30 text-white uppercase tracking-widest">Based on Laravel, PHP & SQL Tasks</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-2xl font-black italic text-primary leading-none">4.9</p>
+                    <p class="text-[8px] font-black opacity-30 text-white uppercase mt-1 italic">Scale: 5.0</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase text-white/60 italic">
+                        <span>Laravel Logic</span>
+                        <span class="text-primary">95%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[95%] shadow-[0_0_15px_rgba(255,77,77,0.3)]"></div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase text-white/60 italic">
+                        <span>Database Architecture</span>
+                        <span class="text-primary">88%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[88%] shadow-[0_0_15px_rgba(255,77,77,0.3)]"></div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase text-white/60 italic">
+                        <span>API Integration</span>
+                        <span class="text-primary">92%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[92%] shadow-[0_0_15px_rgba(255,77,77,0.3)]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass p-1 rounded-[3rem] border-white/5 bg-gradient-to-br from-blue-500/10 to-transparent group">
+        <div class="glass rounded-[2.8rem] p-8">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-tight text-white italic">Professionalism</h4>
+                    <p class="text-[8px] font-bold opacity-30 text-white uppercase tracking-widest">Communication, Deadline & Ethics</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-2xl font-black italic text-blue-400 leading-none">4.5</p>
+                    <p class="text-[8px] font-black opacity-30 text-white uppercase mt-1 italic">Scale: 5.0</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center group-hover:border-blue-500/30 transition-all">
+                    <p class="text-[18px] mb-2">🤝</p>
+                    <p class="text-[9px] font-black uppercase text-white mb-1">Teamwork</p>
+                    <div class="flex gap-1 text-[8px] text-blue-400 italic font-black">★★★★★</div>
+                </div>
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center group-hover:border-blue-500/30 transition-all">
+                    <p class="text-[18px] mb-2">⚡</p>
+                    <p class="text-[9px] font-black uppercase text-white mb-1">Punctuality</p>
+                    <div class="flex gap-1 text-[8px] text-blue-400 italic font-black">★★★★☆</div>
+                </div>
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center group-hover:border-blue-500/30 transition-all">
+                    <p class="text-[18px] mb-2">📝</p>
+                    <p class="text-[9px] font-black uppercase text-white mb-1">Documentation</p>
+                    <div class="flex gap-1 text-[8px] text-blue-400 italic font-black">★★★★☆</div>
+                </div>
+                <div class="bg-white/5 p-5 rounded-2xl border border-white/5 flex flex-col items-center justify-center text-center group-hover:border-blue-500/30 transition-all">
+                    <p class="text-[18px] mb-2">🤖</p>
+                    <p class="text-[9px] font-black uppercase text-white mb-1">AI Usage</p>
+                    <div class="flex gap-1 text-[8px] text-blue-400 italic font-black">★★★★★</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

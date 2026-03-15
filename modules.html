@@ -147,6 +147,50 @@
             opacity: 0;
             transform: translateY(40px);
         }
+
+        body {
+            background-color: #f8fafc;
+            /* lightBg */
+            color: #111827;
+            /* slate-900 */
+        }
+
+        .text-white {
+            color: #111827 !important;
+            /* লাইট মোডে text white কে dark কালারে দেখাবে */
+        }
+
+        .opacity-40 {
+            opacity: 0.6;
+            /* light mode adjust */
+        }
+
+        .opacity-50 {
+            opacity: 0.7;
+        }
+
+        .opacity-30 {
+            opacity: 0.6;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-white {
+            background-color: #fff;
+            /* light mode */
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .dark .text-white {
+            color: #fff !important;
+        }
     </style>
 </head>
 
@@ -163,67 +207,79 @@
         <div id="sidebar"></div>
 
         <div class="flex-1 space-y-8">
-
-          <div class="mt-12 mb-8">
-    <h3 class="text-2xl font-black uppercase tracking-tighter italic text-white">System <span class="text-primary">Overview</span></h3>
-    <p class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Operational Intelligence for Requin BD</p>
+<div class="mt-16 mb-8 flex justify-between items-end">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Course <span class="text-primary">Modules</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Structured learning path for Batch #08 Elite</p>
+    </div>
+    <div class="glass px-4 py-2 rounded-xl border-white/5">
+        <span class="text-[9px] font-black text-white/40 uppercase tracking-widest">Progress: <span class="text-primary italic">04/12 Units</span></span>
+    </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+<div class="space-y-4">
 
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-primary/20 transition-all">
-        <div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all"></div>
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Active Batches</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">08</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Running</span>
-        </div>
-        <p class="text-[8px] font-bold text-primary mt-3 uppercase italic tracking-tighter">Batch #08 is Elite Tier</p>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-blue-500/20 transition-all">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Total Students</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">542</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Enrolled</span>
-        </div>
-        <div class="mt-4 flex -space-x-2">
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-gray-800"></div>
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-gray-700"></div>
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-primary flex items-center justify-center text-[8px] font-black text-white">+</div>
-        </div>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-yellow-500/10 bg-yellow-500/5 relative overflow-hidden group">
-        <div class="absolute right-6 top-6">
-            <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
-            </span>
-        </div>
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-yellow-500/60 mb-4">Pending Review</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-yellow-500">24</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Tasks</span>
-        </div>
-        <p class="text-[8px] font-bold opacity-30 mt-3 uppercase text-white">Needs Mentor Action</p>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-green-500/20 transition-all">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Intern Deliverables</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">12</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Pending</span>
-        </div>
-        <div class="h-1 w-full bg-white/5 mt-4 rounded-full overflow-hidden">
-            <div class="h-full bg-green-500 w-[65%]"></div>
+    <div class="glass p-1 rounded-[2rem] border-primary/20 bg-gradient-to-r from-primary/5 to-transparent">
+        <div class="glass rounded-[1.8rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-6">
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_10px_20px_rgba(255,77,77,0.1)]">
+                    <span class="text-[10px] font-black text-primary italic">M-01</span>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-tight text-white italic">Backend Architecture & Laravel Core</h4>
+                    <p class="text-[9px] font-medium text-white/40 uppercase tracking-widest mt-1">Routing, Controllers, and Middleware Logic</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-right">
+                    <p class="text-[8px] font-black text-white/20 uppercase">Duration</p>
+                    <p class="text-[10px] font-bold text-white italic">02 Weeks</p>
+                </div>
+                <button class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition-all">Continue</button>
+            </div>
         </div>
     </div>
 
-    <div class="glass p-6 rounded-[2.5rem] border-primary/20 bg-primary/5 relative overflow-hidden group">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-primary mb-4">Upcoming Class</p>
-        <h2 class="text-lg font-black italic tracking-tight text-white uppercase leading-tight">Advanced Laravel</h2>
-        <p class="text-[9px] font-black opacity-60 text-white mt-1 uppercase italic">Today, 08:30 PM</p>
+    <div class="glass p-1 rounded-[2rem] border-white/5 opacity-60">
+        <div class="glass rounded-[1.8rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-6">
+                <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <span class="text-green-500">✔</span>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-tight text-white/80 italic">Database Design & Migrations</h4>
+                    <p class="text-[9px] font-medium text-white/20 uppercase tracking-widest mt-1">Advanced Eloquent Relationships & Schema</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-right">
+                    <p class="text-[8px] font-black text-white/20 uppercase">Status</p>
+                    <p class="text-[10px] font-bold text-green-500 italic uppercase">Completed</p>
+                </div>
+                <button class="glass border-white/10 text-white/40 text-[9px] font-black uppercase tracking-widest px-6 py-3 rounded-xl">Review</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass p-1 rounded-[2rem] border-white/5 opacity-40 grayscale">
+        <div class="glass rounded-[1.8rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-6">
+                <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center">
+                    <span class="text-sm opacity-20">🔒</span>
+                </div>
+                <div>
+                    <h4 class="text-sm font-black uppercase tracking-tight text-white italic">API Security & JWT Auth</h4>
+                    <p class="text-[9px] font-medium text-white/20 uppercase tracking-widest mt-1">Spatie Permissions & Stateless Token Management</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:block text-right">
+                    <p class="text-[8px] font-black text-white/20 uppercase">Unlocks In</p>
+                    <p class="text-[10px] font-bold text-white/40 italic">05 Days</p>
+                </div>
+                <button class="cursor-not-allowed glass border-white/5 text-white/10 text-[9px] font-black uppercase tracking-widest px-6 py-3 rounded-xl">Locked</button>
+            </div>
+        </div>
     </div>
 
 </div>

@@ -147,6 +147,50 @@
             opacity: 0;
             transform: translateY(40px);
         }
+
+        body {
+            background-color: #f8fafc;
+            /* lightBg */
+            color: #111827;
+            /* slate-900 */
+        }
+
+        .text-white {
+            color: #111827 !important;
+            /* লাইট মোডে text white কে dark কালারে দেখাবে */
+        }
+
+        .opacity-40 {
+            opacity: 0.6;
+            /* light mode adjust */
+        }
+
+        .opacity-50 {
+            opacity: 0.7;
+        }
+
+        .opacity-30 {
+            opacity: 0.6;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bg-white {
+            background-color: #fff;
+            /* light mode */
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        .dark .text-white {
+            color: #fff !important;
+        }
     </style>
 </head>
 
@@ -163,69 +207,66 @@
         <div id="sidebar"></div>
 
         <div class="flex-1 space-y-8">
-
-          <div class="mt-12 mb-8">
-    <h3 class="text-2xl font-black uppercase tracking-tighter italic text-white">System <span class="text-primary">Overview</span></h3>
-    <p class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Operational Intelligence for Requin BD</p>
+<div class="mt-16 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Broadcast <span class="text-primary">Center</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Publish official updates and alerts for the Requin BD community</p>
+    </div>
+    <button class="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-8 py-4 rounded-2xl shadow-[0_20px_40px_rgba(255,77,77,0.2)] hover:scale-105 transition-all">
+        + Create New Broadcast
+    </button>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 glass p-1 rounded-[3rem] border-primary/20 bg-gradient-to-br from-primary/10 to-transparent relative overflow-hidden group">
+        <div class="absolute -top-10 -right-10 w-48 h-48 bg-primary/20 blur-[80px] rounded-full"></div>
+        
+        <div class="glass rounded-[2.8rem] p-8 md:p-12 relative z-10">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-primary/20 text-primary text-[8px] font-black uppercase tracking-widest italic animate-pulse">Urgent Update</span>
+                <span class="text-[9px] font-black text-white/40 uppercase tracking-widest italic">15 March, 2026</span>
+            </div>
+            
+            <h2 class="text-2xl md:text-4xl font-black text-white uppercase italic tracking-tight leading-none mb-6">Grand Opening: <br><span class="text-primary">Zubaidah Supermarket</span> Raffle Draw</h2>
+            <p class="text-[11px] font-medium text-white/60 leading-relaxed mb-8 max-w-xl">
+                সকল ইন্টার্নদের জানানো যাচ্ছে যে, জুবাইদাহ সুপারমার্কেট প্রোজেক্টের ফাইনাল টিকেট ডিজাইন এবং রাফেল ড্র সিস্টেম আজ রাত ৯টায় রিভিউ করা হবে। সবার উপস্থিতি কাম্য।
+            </p>
 
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-primary/20 transition-all">
-        <div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all"></div>
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Active Batches</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">08</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Running</span>
-        </div>
-        <p class="text-[8px] font-bold text-primary mt-3 uppercase italic tracking-tighter">Batch #08 is Elite Tier</p>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-blue-500/20 transition-all">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Total Students</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">542</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Enrolled</span>
-        </div>
-        <div class="mt-4 flex -space-x-2">
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-gray-800"></div>
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-gray-700"></div>
-            <div class="w-6 h-6 rounded-full border-2 border-[#0a0a0a] bg-primary flex items-center justify-center text-[8px] font-black text-white">+</div>
-        </div>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-yellow-500/10 bg-yellow-500/5 relative overflow-hidden group">
-        <div class="absolute right-6 top-6">
-            <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
-            </span>
-        </div>
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-yellow-500/60 mb-4">Pending Review</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-yellow-500">24</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Tasks</span>
-        </div>
-        <p class="text-[8px] font-bold opacity-30 mt-3 uppercase text-white">Needs Mentor Action</p>
-    </div>
-
-    <div class="glass p-6 rounded-[2.5rem] border-white/5 relative overflow-hidden group hover:border-green-500/20 transition-all">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-40 mb-4 text-white">Intern Deliverables</p>
-        <div class="flex items-baseline gap-2">
-            <h2 class="text-4xl font-black italic tracking-tighter text-white">12</h2>
-            <span class="text-[10px] font-bold opacity-30 uppercase text-white">Pending</span>
-        </div>
-        <div class="h-1 w-full bg-white/5 mt-4 rounded-full overflow-hidden">
-            <div class="h-full bg-green-500 w-[65%]"></div>
+            <div class="flex flex-wrap gap-4">
+                <button class="bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-8 py-4 rounded-2xl hover:scale-105 transition-all">
+                    Join Briefing
+                </button>
+                <button class="glass border-white/10 text-[10px] font-black uppercase tracking-[0.2em] px-8 py-4 rounded-2xl hover:border-primary transition-all text-white">
+                    View Project Files
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class="glass p-6 rounded-[2.5rem] border-primary/20 bg-primary/5 relative overflow-hidden group">
-        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-primary mb-4">Upcoming Class</p>
-        <h2 class="text-lg font-black italic tracking-tight text-white uppercase leading-tight">Advanced Laravel</h2>
-        <p class="text-[9px] font-black opacity-60 text-white mt-1 uppercase italic">Today, 08:30 PM</p>
-    </div>
+    <div class="glass p-8 rounded-[3rem] border-white/5 bg-gradient-to-b from-white/5 to-transparent">
+        <h4 class="text-xs font-black uppercase tracking-[0.2em] mb-8 italic text-white">Recent <span class="text-primary">Alerts</span></h4>
+        
+        <div class="space-y-8">
+            <div class="group cursor-pointer">
+                <p class="text-[8px] font-black text-primary uppercase italic mb-1 tracking-widest">Academic</p>
+                <h5 class="text-xs font-black text-white uppercase tracking-tight group-hover:text-primary transition-colors">Batch #09 Enrollment Starts Soon</h5>
+                <p class="text-[9px] font-medium text-white/30 mt-1">Responsible AI and Web Fundamentals for Class 6-10.</p>
+            </div>
 
+            <div class="group cursor-pointer border-t border-white/5 pt-6">
+                <p class="text-[8px] font-black text-blue-400 uppercase italic mb-1 tracking-widest">Community</p>
+                <h5 class="text-xs font-black text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors">Barobazar Union Cup Final</h5>
+                <p class="text-[9px] font-medium text-white/30 mt-1">Live coverage and digital scoreboard update briefing.</p>
+            </div>
+
+            <div class="group cursor-pointer border-t border-white/5 pt-6">
+                <p class="text-[8px] font-black text-green-400 uppercase italic mb-1 tracking-widest">System</p>
+                <h5 class="text-xs font-black text-white uppercase tracking-tight group-hover:text-green-400 transition-colors">Server Maintenance Notice</h5>
+                <p class="text-[9px] font-medium text-white/30 mt-1">LMS portal will be offline for 2 hours tonight.</p>
+            </div>
+        </div>
+    </div>
 </div>
         </div>
     </main>

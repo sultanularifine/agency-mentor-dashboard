@@ -1,0 +1,72 @@
+<div id="sidebar-overlay" onclick="toggleSidebar()"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[64] hidden lg:hidden"></div>
+<aside id="dashboard-sidebar"
+    class="fixed inset-y-0 left-0 z-[65] w-72 transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-500 ease-in-out lg:block h-screen lg:h-auto">
+    <div class="glass h-full lg:h-auto m-4 lg:m-0 p-6 rounded-[2rem] border-white/5 overflow-y-auto">
+        <div class="flex items-center justify-between mb-10 px-2">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30">
+                    <span class="text-primary text-xl font-black">SA</span>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-tighter">Student Panel</h4>
+                    <p class="text-[10px] opacity-40 uppercase tracking-widest font-bold text-primary">Alpha Coder
+                    </p>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden text-2xl opacity-50">&times;</button>
+        </div>
+
+      <nav class="space-y-1.5 font-bold text-[11px] uppercase tracking-widest">
+    <a href="index.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary text-white shadow-lg shadow-primary/20 transition-all">
+        <span>📊</span> Dashboard
+    </a>
+    <a href="my-courses.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🎓</span> My Courses
+    </a>
+    <a href="my-batches.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📦</span> My Batches
+    </a>
+    <a href="modules.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📚</span> Modules
+    </a>
+    <a href="classes.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🏫</span> Classes
+    </a>
+    <a href="assignments.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📝</span> Assignments
+    </a>
+    <a href="intern-tasks.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>⚡</span> Intern Tasks
+    </a>
+    <a href="students.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>👩‍🎓</span> Students
+    </a>
+    <a href="interns.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🧑‍💻</span> Interns
+    </a>
+    <a href="ratings.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>⭐</span> Ratings
+    </a>
+    <a href="announcements.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📢</span> Announcements
+    </a>
+    <a href="messages.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>💌</span> Messages
+    </a>
+
+    <div class="my-6 border-t border-white/5 pt-6">
+        <a href="profile.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>👤</span> Profile
+        </a>
+        <a href="settings.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>⚙️</span> Settings
+        </a>
+        <a href="logout.html" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-red-500/10 text-red-500 transition-all mt-4">
+            <span>🚪</span> Logout
+        </a>
+    </div>
+</nav>
+    </div>
+</aside>
